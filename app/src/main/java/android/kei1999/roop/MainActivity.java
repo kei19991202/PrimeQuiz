@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     int [] questions;
     int point;
     int answerCount;
-    boolean clear;
 
 
     @Override
@@ -35,22 +34,24 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Number", "Question" + number);
             questions[i] = number;
         }
-        clear = true;
+//        clear = true;
         point = 0;
         answerCount = 0;
 
         textView.setText(questions[answerCount] +  "");
+
     }
 
     public void maru(View v) {
         boolean answer = true;
 
-        int number = questions[answerCount]; //問題数をナンバーに代入
+        int number = questions[answerCount]; //問題部分の配列をナンバーに代入
 
-        for (int i = 2; i < number; i++) { //
+        for (int j = 2; j < number; j++) {
 
-            if (number % i ==0) {
+            if (number % j ==0) { //numberをiで割り切れたら
                 answer = false;
+                Log.d("divideNumber",String.valueOf(j));
                 break;
             }
 
@@ -58,11 +59,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (answer) {
             Toast.makeText(this, "正解", Toast.LENGTH_SHORT).show();
+
         }else{
             Toast.makeText(this, "不正解", Toast.LENGTH_SHORT).show();
-        }
 
-        if (answer) {
+        }
+        if (answer){
             point++;
             Log.d("maru", "正解:" + point);
         }else{
@@ -70,11 +72,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         answerCount++;
+
         if (answerCount == QUESTION_COUNT) {
             textView.setText(point + "点");
 
             point = 0;
             answerCount = 0;
+
+            for (int i = 0; i < QUESTION_COUNT; i++) {
+
+                number = random.nextInt(1000);
+                Log.d("Number", "Question" + number);
+                questions[i] = number;
+            }
         }else{
             textView.setText(number + "");
         }
@@ -86,11 +96,52 @@ public class MainActivity extends AppCompatActivity {
 
         int number = questions[answerCount];
 
-        for (int i = 2; i<number; i++){
+        for (int k = 2; k<number; k++) {
 
-
+            if (number % k ==0) { //numberをiで割り切れたら
+                answer = true;
+                Log.d("divideNumber",String.valueOf(k));
+                break;
+            }
 
         }
+
+        if (answer) {
+            Toast.makeText(this, "正解", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Toast.makeText(this, "不正解", Toast.LENGTH_SHORT).show();
+
+        }
+        if (answer){
+            point++;
+            Log.d("maru", "正解:" + point);
+        }else{
+            Log.d("maru", "不正解");
+        }
+
+        answerCount++;
+
+        if (answerCount == QUESTION_COUNT) {
+            textView.setText(point + "点");
+
+            point = 0;
+            answerCount = 0;
+
+            for (int i = 0; i < QUESTION_COUNT; i++) {
+
+                number = random.nextInt(1000);
+                Log.d("Number", "Question" + number);
+                questions[i] = number;
+            }
+        }else{
+            textView.setText(number + "");
+        }
+
+
+    }
+    public void reset(View v) {
+
 
     }
 }
